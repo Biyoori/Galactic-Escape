@@ -24,7 +24,6 @@ class Entity:
     
     def updateAnimation(self, animation):
         self.currentFrame += 0.1
-        print(self.currentFrame)
         if self.currentFrame < len(animation):
             self.surface.blit(animation[int(self.currentFrame)], self.pos)
         

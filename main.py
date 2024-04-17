@@ -1,6 +1,6 @@
 from settings import *
 
-from utils import loadImage, spawnEnemies
+from utils import loadImage, spawnEnemies, scoreUpdate
 from player import Player
 from enemies import Enemy
 
@@ -16,14 +16,23 @@ class Game:
             "player": loadImage("Data\Sprites\Player.png"),
             "enemy": loadImage("Data\Sprites\Enemy.png")
         }
+        
+        self.score = 0
+        
+        self.font = pygame.font.Font("Data\Fonts\Dosis.ttf", 32)
+        self.scoreText = self.font.render(f"Score: {self.score}", True, colors["white"])
+        self.textRect = self.scoreText.get_rect()
+        self.textRect.center = (WIDTH-self.textRect.width/2-30, 0+self.textRect.height)
 
         self.enemyList = []
-        self.spawnEvent = pygame.USEREVENT + 1
+        self.spawnEvent = pygame.USEREVENT + 1     
 
         self.player = Player((WIDTH/2-32, HEIGHT/2-32), self.assets["player"])
 
     def run(self):
         pygame.time.set_timer(self.spawnEvent, enemySpawnInterval)
+
+
 
         while self.running:
             dt = self.clock.tick(60) / 1000
@@ -54,6 +63,13 @@ class Game:
                 self.player.enemyCollision(enemy)
             #pygame.draw.rect(self.screen, colors["red"], self.enemy.rect)
             
+            scoreUpdate(game)
+
+            self.screen.blit(self.scoreText, self.textRect)
+
+            if not self.player.isDead:
+                self.score += 0.2
+
             pygame.display.update()
 
             

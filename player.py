@@ -30,7 +30,8 @@ class Player(Entity):
     def move(self, dt):
         #Movement
         self.pos = self.rect.topleft
-        self.rect.topleft += self.direction * self.speed * dt
+        if not self.isDead:
+            self.rect.topleft += self.direction * self.speed * dt
         #Screen Bounds
         #Left
         if self.rect.left <= 0:
@@ -49,7 +50,6 @@ class Player(Entity):
         if self.rect.colliderect(enemy.rect) and not self.isDead:
             self.isDead = True
             enemy.isDead = True
-            print('boom')      
 
     def update(self, dt):
         self.input()

@@ -11,5 +11,7 @@ colors = {
     "blue": (30, 30, 200)
 }
 
+
+
 maxEnemies = 20
 enemySpawnInterval = 200
